@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
 function Search() {

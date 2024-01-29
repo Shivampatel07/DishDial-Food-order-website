@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useAuth } from "./Authcontext";
+import configureData from "../environments/environments";
+const baseUrl = configureData.baseUrl;
 
 function LoginForm(props) {
   let { setIsLoggedIn } = useAuth();
@@ -17,16 +19,12 @@ function LoginForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        userData,
-        {
-          withcredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(baseUrl + "/api/auth/login", userData, {
+        withcredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (response.data.message && response.data.token) {
         localStorage.setItem("token", response.data.token);
         toast.success(response.data.message);
@@ -82,7 +80,7 @@ function LoginForm(props) {
         </button>
         <a
           class="inline-block align-baseline hover:font-semibold text-sm text-orange-500 hover:text-orange-800"
-          href="#"
+          href="/"
         >
           Forgot Password?
         </a>

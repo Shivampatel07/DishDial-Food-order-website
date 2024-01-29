@@ -1,17 +1,19 @@
 // AuthContext.js
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import configureData from "./../environments/environments";
+const baseUrl = configureData.baseUrl;
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     if (localStorage.getItem("token") && !isLoggedIn) {
       axios
-        .post("http://localhost:8080/api/auth/user", {
+        .post(baseUrl + "/api/auth/user", {
           token: localStorage.getItem("token"),
         })
         .then((res) => {

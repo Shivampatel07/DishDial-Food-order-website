@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { json } from "react-router-dom";
 import toast from "react-hot-toast";
+import configureData from "../environments/environments";
+const baseUrl = configureData.baseUrl;
 
 function RegisterForm(props) {
   const [RegisterData, setRegisterData] = useState({});
@@ -20,14 +21,11 @@ function RegisterForm(props) {
       } else {
         setError("");
 
-        const response = await axios.post(
-          "http://localhost:8080/api/auth/register",
-          {
-            email: RegisterData.email,
-            username: RegisterData.username,
-            password: RegisterData.createpassword,
-          }
-        );
+        const response = await axios.post(baseUrl + "/api/auth/register", {
+          email: RegisterData.email,
+          username: RegisterData.username,
+          password: RegisterData.createpassword,
+        });
         if (response.data.message) {
           toast.success(response.data.message);
           props.handleSigninOpen();
