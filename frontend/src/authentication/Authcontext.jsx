@@ -25,6 +25,9 @@ export const AuthProvider = ({ children }) => {
             setUser(null);
           }
         });
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
     }
   }, [isLoggedIn]);
 
