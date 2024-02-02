@@ -1,7 +1,9 @@
 import React from "react";
 import ShoppingCartTwoToneIcon from "@mui/icons-material/ShoppingCartTwoTone";
+import { useAuth } from "../authentication/Authcontext";
 
 export default function Drawer({ children, isOpen, setIsOpen }) {
+  const { isLoggedIn } = useAuth();
   return (
     <main
       className={
@@ -22,6 +24,7 @@ export default function Drawer({ children, isOpen, setIsOpen }) {
             Cart <ShoppingCartTwoToneIcon fontSize="large" />
           </header>
           {children}
+          {isLoggedIn ? <></> : <div>Please first Login/Signup</div>}
         </article>
       </section>
       <section

@@ -9,7 +9,9 @@ const Login = async (req, res) => {
     if (data && data.is_verified) {
       const match = await bcrypt.compare(password, data.password);
       if (match) {
-        console.log(data);
+        console.log(
+          `Username: ${data.username} is logged-in successfully with email: ${data.email}`
+        );
 
         return res.json({ message: "Login successfully", token: data.token });
       } else {

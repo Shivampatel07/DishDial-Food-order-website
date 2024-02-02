@@ -2,7 +2,6 @@ const Users = require("./../models/Usermodel");
 
 const UserDataProvider = async (req, res) => {
   const { token } = req.body;
-  console.log(token);
   if (token) {
     const user = await Users.findOne({ token: token });
     if (user) {

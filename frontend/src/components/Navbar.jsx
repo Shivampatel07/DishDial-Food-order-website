@@ -107,9 +107,11 @@ const Navbar = () => {
             </li>
             {isLoggedIn ? (
               <li className="md:ml-8 text-xl md:my-0 my-5 ">
-                <button className=" md:ms-5 px-5 py-3 bg-white  rounded-3xl hover:bg-orange-400">
-                  Profile <AccountCircleIcon/>
-                </button>
+                <Link to='/profile'>
+                  <button className=" md:ms-5 px-5 py-3 bg-white  rounded-3xl hover:bg-orange-400">
+                    Profile <AccountCircleIcon />
+                  </button>
+                </Link>
               </li>
             ) : (
               <li className="md:ml-8 text-xl md:my-0 my-5 ">

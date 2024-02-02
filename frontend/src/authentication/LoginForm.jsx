@@ -6,7 +6,7 @@ import configureData from "../environments/environments";
 const baseUrl = configureData.baseUrl;
 
 function LoginForm(props) {
-  let { setIsLoggedIn } = useAuth();
+  let { setIsInfoGet, isInfoGet } = useAuth();
   const [userData, setUserData] = useState({});
 
   const handleChange = (e) => {
@@ -28,7 +28,7 @@ function LoginForm(props) {
       if (response.data.message && response.data.token) {
         localStorage.setItem("token", response.data.token);
         toast.success(response.data.message);
-        setIsLoggedIn(true);
+        setIsInfoGet(!isInfoGet);
       } else if (response.data.error) {
         toast.error(response.data.error);
       }
