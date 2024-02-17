@@ -1,0 +1,66 @@
+import axios from "axios";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
+import configureData from "../environments/environments";
+
+function RestaurantPage() {
+  const copyNumberToClipboard = () => {
+    navigator.clipboard.writeText(restaurantData.phone_number);
+    toast.success("Phone number copied to clipboard");
+  };
+
+  const { id } = useParams();
+  const [restaurantData, setRestaurantData] = React.useState({});
+  const [menuData, setMenuData] = React.useState([]);
+  useEffect(() => {
+    axios
+      .get(configureData.baseUrl + "/api/restaurent/" + id)
+      .then((res) => {
+        console.log(res.data);
+        setRestaurantData(res.data.restaurant);
+        setMenuData(res.data.products);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+  return (
+    <div>
+      <h1 className="text-4xl ms-10 pb-5 font-bold mt-5">
+        {restaurantData.name}
+      </h1>
+      <img
+        src={configureData.restaurantImage + "/" + restaurantData.image}
+        alt={restaurantData.name}
+        className="w-full h-96 object-cover mt-5"
+      />
+      <div className="mx-5 mt-5 text-xl font-semibold">
+        Address : {restaurantData.address}
+      </div>
+      <div className="mx-5 mt-3 text-xl font-semibold">
+        Phone no. :{" "}
+        <button
+          className="px-3 py-1 rounded-md bg-orange-500 hover:cursor-cell shadow-sm shadow-gray-700 hover:shadow-lg"
+          title="Click to copy"
+          onClick={copyNumberToClipboard}
+        >
+          {restaurantData.phone_number}
+        </button>
+      </div>
+      <div className="p-5 m-5 border-2 border-gray-100 rounded-xl bg-gray-200">
+        {menuData.length > 0 ? (
+          <h2 className="text-3xl text-center m-3 font-bold mb-10">
+            Menu Information
+          </h2>
+        ) : (
+          <h3 className="text-2xl text-center font-semibold">
+            Currently no menu available
+          </h3>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default RestaurantPage;

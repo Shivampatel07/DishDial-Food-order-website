@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopPlaces from "./TopPlaces";
 import TrendingRestaurant from "./TrendingRestaurant";
 

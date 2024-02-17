@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./authentication/Authcontext";
 import Profile from "./containers/Profile";
 import ErrorPage from "./containers/ErrorPage";
+import RestaurantPage from "./containers/RestaurantPage";
 
 function AppContent() {
   let { isLoggedIn } = useAuth();
@@ -18,6 +19,7 @@ function AppContent() {
         <Route exact path="/" element={<Home />} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/restaurant/:id" element={<RestaurantPage />} />
         {isLoggedIn ? (
           <Route path="/profile" element={<Profile />} />
         ) : (

@@ -6,6 +6,8 @@ const port = process.env.PORT || 8000;
 const connectDB = require("./src/config/Db");
 const AuthRouter = require("./src/routes/Authentication.route");
 const cookieParser = require("cookie-parser");
+const restaurentRouter = require("./src/routes/FindRestaurent.route");
+const path = require("path");
 
 connectDB();
 app.use(cookieParser());
@@ -15,9 +17,20 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(
+  "/images/restaurant",
+  expr.static(path.join(__dirname, "/src/Images/restaurant"))
+);
+app.use(
+  "/images/product",
+  expr.static(path.join(__dirname, "/src/Images/product"))
+);
+
 app.use(expr.json());
 
 app.use("/api/auth", AuthRouter);
+app.use("/api", restaurentRouter);
 // /api/auth/register = Register a user
 // /api/auth/login = Login a user
 

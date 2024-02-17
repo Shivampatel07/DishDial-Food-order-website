@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const restaurentProductSchema = new mongoose.Schema(
   {
-    restaurent: {
+    restaurentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Restaurent",
       required: true,

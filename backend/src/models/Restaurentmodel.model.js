@@ -6,10 +6,30 @@ const restaurentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    Address: {
+    address: {
       type: String,
       required: true,
       trim: true,
+    },
+    image: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    famous: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+      validate: {
+        validator: function (v) {
+          return v >= 0 && v <= 5;
+        },
+        message: (props) => `${props.value} is not a valid rating!`,
+      },
     },
     phone_number: {
       type: String,
