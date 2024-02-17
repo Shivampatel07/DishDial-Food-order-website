@@ -1,24 +1,16 @@
 const mongoose = require("mongoose");
-// User Schema
-const UserSchema = new mongoose.Schema(
+const restaurentSchema = new mongoose.Schema(
   {
-    email: {
-      unique: true,
+    name: {
       type: String,
       required: true,
       trim: true,
     },
-    username: {
-      unique: true,
+    Address: {
       type: String,
       required: true,
       trim: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
-    Address: String,
     phone_number: {
       type: String,
       validate: {
@@ -28,17 +20,8 @@ const UserSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
-    is_verified: {
-      type: Boolean,
-      required: true,
-    },
-    token: {
-      type: String,
-      required: true,
-    },
   },
   { timestamps: true }
 );
 mongoose.pluralize(null);
-UserSchema.index({ email: 1, username: 1 }, { unique: true });
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("Restaurent", restaurentSchema);
