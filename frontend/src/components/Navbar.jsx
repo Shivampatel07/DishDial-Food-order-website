@@ -76,20 +76,18 @@ const Navbar = () => {
               open ? "top-20 " : "top-[-490px]"
             }`}
           >
-            <li className="md:ml-8 text-xl md:my-0 my-7 hover:cursor-pointer hover:underline underline-offset-4 inline">
+            {/* <li className="md:ml-8 text-xl md:my-0 my-7 hover:cursor-pointer hover:underline underline-offset-4 inline">
               <Search />
-            </li>
+            </li> */}
             <li className="md:ml-8 text-xl md:my-0 my-7 hover:underline underline-offset-4">
               <Link
                 onClick={() => {
                   setOpen(false);
                 }}
-                to="/offers"
-                className={
-                  url === "/offers" ? " underline underline-offset-4" : ""
-                }
+                to="/"
+                className={url === "/" ? " underline underline-offset-4" : ""}
               >
-                Offers <LocalOfferTwoToneIcon />
+                Home <LocalOfferTwoToneIcon />
               </Link>
             </li>
             <li className="md:ml-8 text-xl md:my-0 my-7 hover:underline underline-offset-4">
@@ -107,7 +105,7 @@ const Navbar = () => {
             </li>
             {isLoggedIn ? (
               <li className="md:ml-8 text-xl md:my-0 my-5 ">
-                <Link to='/profile'>
+                <Link to="/profile">
                   <button className=" md:ms-5 px-5 py-3 bg-white  rounded-3xl hover:bg-orange-400">
                     Profile <AccountCircleIcon />
                   </button>

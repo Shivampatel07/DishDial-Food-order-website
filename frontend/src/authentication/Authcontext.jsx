@@ -10,6 +10,13 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isInfoGet, setIsInfoGet] = useState(false);
+  const [cart, setCart] = useState(
+    localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     if (localStorage.getItem("token") && !isLoggedIn) {
@@ -41,6 +48,8 @@ export const AuthProvider = ({ children }) => {
         user,
         isInfoGet,
         setIsInfoGet,
+        cart,
+        setCart,
       }}
     >
       {children}

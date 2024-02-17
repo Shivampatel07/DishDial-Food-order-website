@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    Address: String,
+    address: String,
     phone_number: {
       type: String,
       validate: {

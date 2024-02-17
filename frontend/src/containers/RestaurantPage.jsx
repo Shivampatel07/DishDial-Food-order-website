@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import configureData from "../environments/environments";
+import CardProduct from "../components/CardProduct";
 
 function RestaurantPage() {
   const copyNumberToClipboard = () => {
@@ -17,7 +18,6 @@ function RestaurantPage() {
     axios
       .get(configureData.baseUrl + "/api/restaurent/" + id)
       .then((res) => {
-        console.log(res.data);
         setRestaurantData(res.data.restaurant);
         setMenuData(res.data.products);
       })
@@ -48,11 +48,32 @@ function RestaurantPage() {
           {restaurantData.phone_number}
         </button>
       </div>
-      <div className="p-5 m-5 border-2 border-gray-100 rounded-xl bg-gray-200">
+      <div className="p-1 m-1 sm:p-5 sm:w-full sm:m-5 border-2 border-gray-100 rounded-xl bg-gray-200 ">
         {menuData.length > 0 ? (
-          <h2 className="text-3xl text-center m-3 font-bold mb-10">
-            Menu Information
-          </h2>
+          <div>
+            <h2 className="text-3xl text-center m-3 font-bold mb-10">
+              Menu Information
+            </h2>
+            <div className="flex justify-center">
+              <div className="w-[100%] sm:w-[80%]">
+                <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-14">
+                  {menuData.map((product, index) => {
+                    return (
+                      <div key={index}>
+                        <CardProduct
+                          id={product._id}
+                          src={product.image}
+                          name={product.name}
+                          description={product.description}
+                          price={product.price}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
         ) : (
           <h3 className="text-2xl text-center font-semibold">
             Currently no menu available

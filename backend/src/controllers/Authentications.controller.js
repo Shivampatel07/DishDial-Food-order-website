@@ -1,6 +1,7 @@
 const Users = require("../models/Usermodel.model");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
+const OrdermodelModel = require("../models/Ordermodel.model");
 
 const Register = async (req, res) => {
   try {
@@ -89,11 +90,37 @@ const UserDataProvider = async (req, res) => {
 const userProfileInfo = async (req, res) => {
   if (req.user) {
     const user = req.user;
-    return res.status(200).json({ email: user.email, username: user.username, address: user.address, phone_number: user.phone_number });
-  }
-  else {
+    const id = user._id;
+    const orderData = await OrdermodelModel.find({ userId: id });
+    return res.status(200).json({
+      email: user.email,
+      username: user.username,
+      address: user.address,
+      phone_number: user.phone_number,
+      orderData: orderData,
+    });
+  } else {
     return res.status(404).json({ error: "Invalid token" });
   }
-}
+};
 
-module.exports = { Register, Login, UserDataProvider, userProfileInfo};
+const userUpdateProfile = async (req, res) => {
+  const { username, address, phone_number } = req.body;
+  try {
+    const user = await Users.findOneAndUpdate(
+      { username },
+      { address, phone_number }
+    );
+    return res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    return res.status(404).json({ error: "Invalid token" });
+  }
+};
+
+module.exports = {
+  Register,
+  Login,
+  UserDataProvider,
+  userProfileInfo,
+  userUpdateProfile,
+};

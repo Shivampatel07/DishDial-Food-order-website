@@ -23,17 +23,21 @@ function TrendingRestaurant() {
       </h1>
       <div className="flex justify-center items-center mt-10">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-14  ">
-          {restaurantData.map((restaurant) => {
+          {restaurantData.map((restaurant, index) => {
             return (
-              <CardRestaurant
-                src={configureData.restaurantImage + "/" + restaurant.image}
-                alt="ahmedabad"
-                title={restaurant.name}
-                rating={restaurant.rating}
-                famous={restaurant.famous ? restaurant.famous : "Not Available"}
-                location={restaurant.address}
-                url={"/restaurant/" + restaurant._id}
-              />
+              <div key={index}>
+                <CardRestaurant
+                  src={configureData.restaurantImage + "/" + restaurant.image}
+                  alt="ahmedabad"
+                  title={restaurant.name}
+                  rating={restaurant.rating}
+                  famous={
+                    restaurant.famous ? restaurant.famous : "Not Available"
+                  }
+                  location={restaurant.address}
+                  url={"/restaurant/" + restaurant._id}
+                />
+              </div>
             );
           })}
         </div>
