@@ -4,7 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 8000;
 const connectDB = require("./src/config/Db");
-const AuthRouter = require("./src/routes/Authentication");
+const AuthRouter = require("./src/routes/Authentication.route");
 const cookieParser = require("cookie-parser");
 
 connectDB();

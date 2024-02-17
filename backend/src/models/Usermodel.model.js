@@ -18,6 +18,16 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    Address: String,
+    phone_number: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return v ? /^[1-9][0-9]{9}$/.test(v) : true;
+        },
+        message: props => `${props.value} is not a valid phone number!`
+      },
+    },
     is_verified: {
       type: Boolean,
       required: true,
