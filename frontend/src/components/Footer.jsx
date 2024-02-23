@@ -53,11 +53,10 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h2 className="text-lg font-semibold">ABOUT DISHDIAL</h2>
+            <h2 className="text-lg font-semibold">Developed by</h2>
             <ul className="mt-3">
-              <li>BECOME PARTNER & JOIN</li>
-              <li>SEE ON OUR APP</li>
-              <li>OTHER PARTNERS</li>
+              <li>Patel Shivam Hareshkumar</li>
+              <li>Gurjar Divyesh Vimalkumar</li>
             </ul>
           </div>
           <div>

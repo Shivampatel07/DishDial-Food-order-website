@@ -10,6 +10,7 @@ const restaurentRouter = require("./src/routes/FindRestaurent.route");
 const path = require("path");
 
 connectDB();
+app.use(expr.static(path.join(__dirname,"../frontend/build/")))
 app.use(cookieParser());
 app.use(
   cors({

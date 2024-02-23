@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bd53ebf8.css",
+    "main.js": "/static/js/main.fc887db4.js",
+    "static/media/dish-dial-high-resolution-logo-black-transparent.png": "/static/media/dish-dial-high-resolution-logo-black-transparent.a21109c01fc6c344e45c.png",
+    "static/media/app-store-png-logo-33116.png": "/static/media/app-store-png-logo-33116.898627273092589eeb70.png",
+    "index.html": "/index.html",
+    "main.bd53ebf8.css.map": "/static/css/main.bd53ebf8.css.map",
+    "main.fc887db4.js.map": "/static/js/main.fc887db4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bd53ebf8.css",
+    "static/js/main.fc887db4.js"
+  ]
+}
