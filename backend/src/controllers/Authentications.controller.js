@@ -38,7 +38,7 @@ const Register = async (req, res) => {
       email,
       username,
       password: passwordHash,
-      is_verified: false,
+      is_verified: true,
       token: token,
     });
     await newUser.save();
