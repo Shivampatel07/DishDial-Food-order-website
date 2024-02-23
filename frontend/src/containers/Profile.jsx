@@ -99,6 +99,10 @@ function Profile() {
     borderRadius: "10px",
   };
 
+  const Logout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
   return (
     <div>
       <Modal
@@ -280,6 +284,14 @@ function Profile() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex justify-end m-5">
+        <button
+          className="px-4 py-2 bg-red-500 text-white shadow-md hover:shadow-sm shadow-gray-400 rounded-lg"
+          onClick={Logout}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
