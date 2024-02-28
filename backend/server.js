@@ -13,19 +13,16 @@ connectDB();
 app.use(expr.static(path.join(__dirname,"../../frontend/build/")))
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(
   "/images/restaurant",
-  expr.static(path.join(__dirname, "/src/Images/restaurant"))
+  expr.static(path.join(__dirname, "../src/Images/restaurant"))
 );
 app.use(
   "/images/product",
-  expr.static(path.join(__dirname, "/src/Images/product"))
+  expr.static(path.join(__dirname, "../src/Images/product"))
 );
 
 app.use(expr.json());
