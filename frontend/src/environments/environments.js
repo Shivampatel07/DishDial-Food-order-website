@@ -1,7 +1,7 @@
 const configureData = {
-  baseUrl: "http://localhost",
-  restaurantImage: "http://localhost/images/restaurant",
-  productImage: "http://localhost/images/product",
+  baseUrl: "https://food-ordering-website-4bfm.onrender.com",
+  restaurantImage: "https://food-ordering-website-4bfm.onrender.com/images/restaurant",
+  productImage: "https://food-ordering-website-4bfm.onrender.com/images/product",
 };
 
 export default configureData;
