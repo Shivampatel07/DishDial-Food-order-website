@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
-    "start": "cd dist && nodemon main.js",
+    "start": "nodemon server.js",
     "build:dev": "webpack --config webpack.config.js --mode development",
     "build:prod": "webpack --config webpack.config.js --mode production",
     "start:prod": "nodemon ./dist/main.js"
