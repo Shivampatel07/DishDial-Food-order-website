@@ -8,29 +8,24 @@ const AuthRouter = require("./src/routes/Authentication.route");
 const cookieParser = require("cookie-parser");
 const restaurentRouter = require("./src/routes/FindRestaurent.route");
 const path = require("path");
-
+const frontend_url = process.env.FRONTEND_BASE_URL
 connectDB();
-app.use(expr.static(path.join(__dirname,"../../frontend/build/")))
-app.use(cookieParser());
-app.use(
-  cors()
-);
-
+app.use(cookieParser({}));
+app.use(cors({origin: frontend_url,credentials: true}));
+console.log(frontend_url)
 app.use(
   "/images/restaurant",
-  expr.static(path.join(__dirname, "../src/Images/restaurant"))
+  expr.static(path.join(__dirname, "./src/Images/restaurant"))
 );
 app.use(
   "/images/product",
-  expr.static(path.join(__dirname, "../src/Images/product"))
+  expr.static(path.join(__dirname, "./src/Images/product"))
 );
 
 app.use(expr.json());
 
 app.use("/api/auth", AuthRouter);
 app.use("/api", restaurentRouter);
-// /api/auth/register = Register a user
-// /api/auth/login = Login a user
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
