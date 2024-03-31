@@ -15,11 +15,11 @@ app.use(cors({origin: frontend_url,credentials: true}));
 console.log(frontend_url)
 app.use(
   "/images/restaurant",
-  expr.static(path.join(__dirname, "./src/Images/restaurant"))
+  expr.static(path.join(__dirname, process.env.ENVIRONMENT === 'production' ? "../src/Images/restaurant" : "./src/Images/restaurant"))
 );
 app.use(
   "/images/product",
-  expr.static(path.join(__dirname, "./src/Images/product"))
+  expr.static(path.join(__dirname, process.env.ENVIRONMENT === 'production' ? "../src/Images/product" : "./src/Images/product"))
 );
 
 app.use(expr.json());
