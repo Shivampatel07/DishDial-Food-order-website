@@ -6,8 +6,10 @@ import EditNoteTwoToneIcon from "@mui/icons-material/EditNoteTwoTone";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+import { useAuth } from "../authentication/Authcontext";
 
 function Profile() {
+  const {setIsLoading} = useAuth()
   const [userData, setUserData] = React.useState({});
   const [userOrders, setUserOrders] = React.useState([]);
   const [modalEditOpen, setModalEditOpen] = React.useState(false);
@@ -65,6 +67,7 @@ function Profile() {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get(configureData.baseUrl + "/api/auth/profile", {
         headers: {
@@ -86,6 +89,7 @@ function Profile() {
           duration: 2000,
         });
       });
+      setIsLoading(false)
   }, []);
   const modalStyle = {
     position: "relative",

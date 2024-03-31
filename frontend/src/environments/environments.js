@@ -1,4 +1,6 @@
-const frontend_url = process.env.REACT_APP_CMS_BACKEND_BASE_URL
+const NODE_ENV = process.env.NODE_ENV
+const frontend_url = NODE_ENV === 'production' ? process.env.REACT_APP_CMS_BACKEND_BASE_URL : 'http://localhost:8080'
+console.log(process.env)
 const configureData = {
   baseUrl: frontend_url,
   restaurantImage: frontend_url + "/images/restaurant",

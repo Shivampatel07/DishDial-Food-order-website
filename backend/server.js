@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 const restaurentRouter = require("./src/routes/FindRestaurent.route");
 const path = require("path");
 const NODE_ENV = process.env.ENVIRONMENT
-const frontend_url = NODE_ENV === 'production' ? process.env.FRONTEND_BASE_URL : ('http://localhost:' + process.env.PORT)
+const frontend_url = NODE_ENV === 'production' ? process.env.FRONTEND_BASE_URL : 'http://localhost:3000'
 connectDB();
 app.use(cookieParser({}));
 app.use(cors({ origin: frontend_url, credentials: true }));

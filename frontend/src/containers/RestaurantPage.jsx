@@ -4,17 +4,19 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import configureData from "../environments/environments";
 import CardProduct from "../components/CardProduct";
+import { useAuth } from "../authentication/Authcontext";
 
 function RestaurantPage() {
   const copyNumberToClipboard = () => {
     navigator.clipboard.writeText(restaurantData.phone_number);
     toast.success("Phone number copied to clipboard");
   };
-
+  const {setIsLoading} = useAuth()
   const { id } = useParams();
   const [restaurantData, setRestaurantData] = React.useState({});
   const [menuData, setMenuData] = React.useState([]);
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get(configureData.baseUrl + "/api/restaurent/" + id)
       .then((res) => {
@@ -24,6 +26,7 @@ function RestaurantPage() {
       .catch((error) => {
         console.log(error);
       });
+      setIsLoading(false)
   }, [id]);
   return (
     <div>

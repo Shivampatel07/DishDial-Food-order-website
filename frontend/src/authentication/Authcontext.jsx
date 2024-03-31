@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [cart, setCart] = useState(
     localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
   );
-
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -50,6 +50,8 @@ export const AuthProvider = ({ children }) => {
         setIsInfoGet,
         cart,
         setCart,
+        isLoading,
+        setIsLoading
       }}
     >
       {children}

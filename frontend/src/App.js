@@ -9,19 +9,20 @@ import { AuthProvider, useAuth } from "./authentication/Authcontext";
 import Profile from "./containers/Profile";
 import ErrorPage from "./containers/ErrorPage";
 import RestaurantPage from "./containers/RestaurantPage";
+import Loading from "./components/Loading";
 
 function AppContent() {
-  let { isLoggedIn } = useAuth();
+  let { isLoggedIn, isLoading } = useAuth();
   return (
     <>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/offers" element={<Offers />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/restaurant/:id" element={<RestaurantPage />} />
+        <Route exact path="/" element={!isLoading ? <Home /> : <Loading/>} />
+        <Route path="/offers" element={!isLoading ? <Offers /> : <Loading/>} />
+        <Route path="/help" element={!isLoading ? <Help /> : <Loading/>} />
+        <Route path="/restaurant/:id" element={!isLoading ? <RestaurantPage /> : <Loading/>} />
         {isLoggedIn ? (
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={!isLoading ? <Profile /> : <Loading/>} />
         ) : (
           <Route path="/*" element={<ErrorPage />} />
         )}

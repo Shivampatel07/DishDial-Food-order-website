@@ -9,7 +9,6 @@ function TrendingRestaurant() {
     axios
       .get(configureData.baseUrl + "/api/restaurent/all")
       .then((res) => {
-        console.log(res.data);
         setRestaurantData(res.data);
       })
       .catch((error) => {
