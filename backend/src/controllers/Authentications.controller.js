@@ -2,6 +2,7 @@ const Users = require("../models/Usermodel.model");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const OrdermodelModel = require("../models/Ordermodel.model");
+const { successResponse, catchResponse, errorResponse } = require("../utils/index.utils")
 
 const Register = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ const Register = async (req, res) => {
     let usernameTaken = await Users.findOne({ username });
     if (usernameTaken) {
       if (usernameTaken.is_verified) {
-        return res.json({ error: "Username already taken" });
+        errorResponse(res, "Username already taken")
       } else {
         await Users.deleteOne({ username });
       }
@@ -21,7 +22,7 @@ const Register = async (req, res) => {
     let emailTaken = await Users.findOne({ email });
     if (emailTaken) {
       if (emailTaken.is_verified) {
-        return res.json({ error: "Email already taken" });
+        errorResponse(res, "Email already taken")
       } else {
         await Users.deleteOne({ email });
       }
@@ -42,10 +43,9 @@ const Register = async (req, res) => {
       token: token,
     });
     await newUser.save();
-    res.json({ message: "User registered" });
+    successResponse(res, "User registered")
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Server Error" });
+    catchResponse(res, "Server Error", error)
   }
 };
 
@@ -59,17 +59,15 @@ const Login = async (req, res) => {
         console.log(
           `Username: ${data.username} is logged-in successfully with email: ${data.email}`
         );
-
         return res.json({ message: "Login successfully", token: data.token });
       } else {
-        return res.json({ error: "Username or Password not match" });
+        errorResponse(res, "Username or Password not match")
       }
     } else {
-      return res.json({ error: "User not exist" });
+      errorResponse(res, "User not exist")
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Server Error" });
+    catchResponse(res, "Server Error", error)
   }
 };
 
