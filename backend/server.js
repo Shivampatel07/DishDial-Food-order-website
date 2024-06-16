@@ -14,7 +14,8 @@ const frontend_url = NODE_ENV === 'production' ? process.env.FRONTEND_BASE_URL :
 const Sentry = require('@sentry/node')
 connectDB();
 app.use(cookieParser({}));
-app.use(cors({ origin: frontend_url, credentials: true }));
+// app.use(cors({ origin: frontend_url, credentials: true }));
+app.use(cors());
 
 console.log("Node environment:", NODE_ENV)
 console.log("Frontend URL:", frontend_url)
