@@ -31,7 +31,7 @@ app.use(
 );
 
 app.use(expr.json());
-app.use('', (req, res) => {
+app.get('/', (req, res) => {
   res.send({ version: PACKAGE.version })
 })
 
