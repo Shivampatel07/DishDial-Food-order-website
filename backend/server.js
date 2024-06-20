@@ -12,6 +12,7 @@ const path = require("path");
 const NODE_ENV = process.env.ENVIRONMENT
 const frontend_url = NODE_ENV === 'production' ? process.env.FRONTEND_BASE_URL : 'http://localhost:3000'
 const Sentry = require('@sentry/node')
+const PACKAGE = require('./package.json')
 connectDB();
 app.use(cookieParser({}));
 // app.use(cors({ origin: frontend_url, credentials: true }));
@@ -30,6 +31,9 @@ app.use(
 );
 
 app.use(expr.json());
+app.use('', (req, res) => {
+  res.send({ version: PACKAGE.version })
+})
 
 app.use("/api/auth", AuthRouter);
 app.use("/api", restaurentRouter);
