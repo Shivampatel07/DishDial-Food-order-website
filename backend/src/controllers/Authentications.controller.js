@@ -79,11 +79,12 @@ const Login = async (req, res) => {
     const username = req.body.username.trim()
     const password = req.body.password.trim()
 
-    const loginData = await Users.findOne({ username, is_verified: true }, "username email is_verified").lean();
+    const loginData = await Users.findOne({ username, is_verified: true }, "username email is_verified password").lean();
 
     if (loginData) {
       const match = await bcrypt.compare(password, loginData.password);
       if (match) {
+        delete loginData.password
         successResponse(res, loginData, "Login successfully")
       } else {
         errorResponse(res, "Invalid username or password", 401);
@@ -92,6 +93,7 @@ const Login = async (req, res) => {
       errorResponse(res, "Account not exists or not verified", 404);
     }
   } catch (error) {
+    console.log(error)
     catchResponse(res, "Error occured in login", error);
   }
 };
