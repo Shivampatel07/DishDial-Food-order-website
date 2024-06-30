@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import configureData from "../environments/environments";
+import { useAuth } from "./Authcontext";
 const baseUrl = configureData.baseUrl;
 
 function RegisterForm(props) {
+  let { setIsInfoGet, isInfoGet } = useAuth();
   const [RegisterData, setRegisterData] = useState({});
   const [error, setError] = useState("");
 
@@ -14,28 +16,29 @@ function RegisterForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (RegisterData.createpassword !== RegisterData.confirmpassword) {
-        setError("Passwords do not match");
-        return;
-      } else {
-        setError("");
+    if (RegisterData.createpassword !== RegisterData.confirmpassword) {
+      setError("Passwords do not match");
+      return;
+    } else {
+      setError("");
 
-        const response = await axios.post(baseUrl + "/api/auth/register", {
-          email: RegisterData.email,
-          username: RegisterData.username,
-          password: RegisterData.createpassword,
-        });
-        if (response.data.message) {
-          toast.success(response.data.message);
-          props.handleSigninOpen();
-        } else if (response.data.error) {
-          toast.error(response.data.error);
+      const response = await axios.post(baseUrl + "/api/auth/register", {
+        email: RegisterData.email,
+        username: RegisterData.username,
+        password: RegisterData.createpassword,
+      }).then((response) => {
+        const registerResponse = response.data
+        if (registerResponse.success === 1) {
+          localStorage.setItem('token', registerResponse.data.token)
+          toast.success(registerResponse.message)
+          setIsInfoGet(!isInfoGet);
         }
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error.response.data.message);
+        else if (registerResponse.success === 0) {
+          toast.error(registerResponse.message)
+        }
+      }).catch((error) => {
+        toast.error('Internal server error')
+      })
     }
   };
 
