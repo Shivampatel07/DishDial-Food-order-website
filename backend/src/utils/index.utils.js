@@ -6,7 +6,7 @@ const successResponse = (res, data, message) => {
 
 const errorResponse = (res, message, status_code) => {
 	Sentry.captureMessage(message)
-	return res.status(status_code).json({ success: 0, message: message, status: status_code });
+	return res.json({ success: 0, message: message, status: status_code });
 }
 
 const catchResponse = (res, message, error) => {
