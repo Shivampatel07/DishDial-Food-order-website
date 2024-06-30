@@ -2,39 +2,50 @@ const Users = require("../models/Usermodel.model");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const OrdermodelModel = require("../models/Ordermodel.model");
-const { successResponse, catchResponse, errorResponse } = require("../utils/index.utils")
+const {
+  successResponse,
+  catchResponse,
+  errorResponse,
+} = require("../utils/index.utils");
+const joi = require("joi");
+const _ = require("lodash");
 
 const Register = async (req, res) => {
   try {
-    const { email, username, password } = req.body; // req.body is the object passed to the route from the frontend
+    const { email, username, password } = req.body;
 
-    // Check if the username already exists or not
-    let usernameTaken = await Users.findOne({ username });
-    if (usernameTaken) {
-      if (usernameTaken.is_verified) {
-        errorResponse(res, "Username already taken")
+    const registerValidate = joi.object({
+      email: joi.string().trim().required(),
+      username: joi.string().trim().required(),
+      password: joi.string().trim().required(),
+    });
+
+    const { error } = registerValidate.validate(req.body);
+
+    if (error) {
+      const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
+      errorResponse(res, errorMessage, 400);
+    }
+
+    const existingUser = await Users.findOne({ $or: [{ username }, { email }] }).lean();
+
+    if (existingUser) {
+      if (existingUser.is_verified) {
+        errorResponse(res, existingUser.username === username ? "Username already taken" : "Email already taken");
       } else {
-        await Users.deleteOne({ username });
+        await Users.deleteOne({ email: existingUser.email });
       }
     }
 
-    // Check if the email already exists or not
-    let emailTaken = await Users.findOne({ email });
-    if (emailTaken) {
-      if (emailTaken.is_verified) {
-        errorResponse(res, "Email already taken")
-      } else {
-        await Users.deleteOne({ email });
-      }
-    }
     const passwordHash = await bcrypt.hash(password, 14);
-    const token = await JWT.sign(
+    const token = JWT.sign(
       { username: username, email: email },
       process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       }
     );
+
     const newUser = new Users({
       email,
       username,
@@ -43,9 +54,10 @@ const Register = async (req, res) => {
       token: token,
     });
     await newUser.save();
-    return res.json({ message: "User registered", token: newUser.token, success: 1 })
+
+    successResponse(res, newUser, "user registered successfully")
   } catch (error) {
-    catchResponse(res, "Server Error", error)
+    catchResponse(res, "error occured in register", error)
   }
 };
 
@@ -61,13 +73,13 @@ const Login = async (req, res) => {
         );
         return res.json({ message: "Login successfully", token: data.token });
       } else {
-        errorResponse(res, "Username or Password not match")
+        errorResponse(res, "Username or Password not match");
       }
     } else {
-      errorResponse(res, "User not exist")
+      errorResponse(res, "User not exist");
     }
   } catch (error) {
-    catchResponse(res, "Server Error", error)
+    catchResponse(res, "Server Error", error);
   }
 };
 
