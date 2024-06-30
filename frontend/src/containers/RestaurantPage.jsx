@@ -33,7 +33,7 @@ function RestaurantPage() {
       .catch((error) => {
         toast.error(error)
       });
-  }, [id]);
+  }, []);
   return (
     <div>
       <h1 className="text-4xl ms-10 pb-5 font-bold mt-5">
