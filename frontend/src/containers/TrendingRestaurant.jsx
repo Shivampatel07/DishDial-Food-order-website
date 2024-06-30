@@ -2,17 +2,19 @@ import React, { useEffect } from "react";
 import CardRestaurant from "../components/CardRestaurant";
 import axios from "axios";
 import configureData from "../environments/environments";
+import toast from "react-hot-toast";
 
 function TrendingRestaurant() {
   const [restaurantData, setRestaurantData] = React.useState([]);
   useEffect(() => {
     axios
       .get(configureData.baseUrl + "/api/restaurent/all")
-      .then((res) => {
-        setRestaurantData(res.data);
+      .then((response) => {
+        const allResturentData = response.data
+        setRestaurantData(allResturentData.data);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Internal server error")
       });
   }, []);
   return (
