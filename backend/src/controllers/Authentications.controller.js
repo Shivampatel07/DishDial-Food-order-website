@@ -12,8 +12,6 @@ const _ = require("lodash");
 
 const Register = async (req, res) => {
   try {
-    const { email, username, password } = req.body;
-
     const registerValidate = joi.object({
       email: joi.string().trim().required(),
       username: joi.string().trim().required(),
@@ -26,6 +24,10 @@ const Register = async (req, res) => {
       const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
       errorResponse(res, errorMessage, 400);
     }
+
+    const email = req.body.email.trim()
+    const username = req.body.username.trim()
+    const password = req.body.password.trim()
 
     const existingUser = await Users.findOne({ $or: [{ username }, { email }] }).lean();
 
@@ -60,6 +62,7 @@ const Register = async (req, res) => {
     catchResponse(res, "error occured in register", error)
   }
 };
+
 
 const Login = async (req, res) => {
   try {
