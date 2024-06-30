@@ -18,24 +18,24 @@ function LoginForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(baseUrl + "/api/auth/login", userData, {
-        withcredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.data.message && response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        toast.success(response.data.message);
+    const response = await axios.post(baseUrl + "/api/auth/login", userData, {
+      withcredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      const loginResponse = response.data
+      if (loginResponse.success === 1) {
+        localStorage.setItem("token", loginResponse.data.token);
+        toast.success(loginResponse.message);
         setIsInfoGet(!isInfoGet);
-      } else if (response.data.error) {
-        toast.error(response.data.error);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
-    }
+      else if (loginResponse.success === 0) {
+        toast.error(loginResponse.message)
+      }
+    }).catch((error) => {
+      toast.error("Internal server error")
+    })
   };
   return (
     <form className="font-[Raleway]" onSubmit={handleSubmit}>

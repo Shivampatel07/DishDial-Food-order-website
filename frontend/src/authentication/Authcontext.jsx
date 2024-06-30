@@ -19,13 +19,14 @@ export const AuthProvider = ({ children }) => {
   }, [cart]);
 
   useEffect(() => {
-    if (localStorage.getItem("token") && !isLoggedIn) {
+    const token = localStorage.getItem("token")?.trim()
+    if (token && !isLoggedIn) {
       axios
         .post(baseUrl + "/api/auth/user", {
           token: localStorage.getItem("token"),
         })
         .then((res) => {
-          if (res) {
+          if (res.data.success === 1) {
             setIsLoggedIn(true);
             setUser(res.data);
           } else {

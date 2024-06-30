@@ -19,14 +19,20 @@ function RestaurantPage() {
     setIsLoading(true)
     axios
       .get(configureData.baseUrl + "/api/restaurent/" + id)
-      .then((res) => {
-        setRestaurantData(res.data.restaurant);
-        setMenuData(res.data.products);
+      .then((response) => {
+        const restaurantData = response.data
+        if (restaurantData.success === 1) {
+          setRestaurantData(restaurantData.data.restaurant);
+          setMenuData(restaurantData.data.products);
+        }
+        else {
+          toast.error(restaurantData.message)
+        }
+        setIsLoading(false)
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error)
       });
-      setIsLoading(false)
   }, [id]);
   return (
     <div>

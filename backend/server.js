@@ -15,11 +15,8 @@ const Sentry = require('@sentry/node')
 const PACKAGE = require('./package.json')
 connectDB();
 app.use(cookieParser({}));
-// app.use(cors({ origin: frontend_url, credentials: true }));
-app.use(cors());
 
-console.log("Node environment:", NODE_ENV)
-console.log("Frontend URL:", frontend_url)
+app.use(cors());
 
 app.use(
   "/images/restaurant",
@@ -30,10 +27,8 @@ app.use(
   expr.static(path.join(__dirname, NODE_ENV === 'production' ? "../src/Images/product" : "./src/Images/product"))
 );
 
+app.use(expr.urlencoded({ extended: true }));
 app.use(expr.json());
-app.get('/', (req, res) => {
-  res.send({ version: PACKAGE.version })
-})
 
 app.use("/api/auth", AuthRouter);
 app.use("/api", restaurentRouter);
