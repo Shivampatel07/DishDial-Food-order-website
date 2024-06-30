@@ -33,7 +33,7 @@ const Register = async (req, res) => {
 
     if (existingUser) {
       if (existingUser.is_verified) {
-        errorResponse(res, existingUser.username === username ? "Username already taken" : "Email already taken");
+        errorResponse(res, existingUser.username === username ? `${username} username already taken` : "Account already exists!", 401);
       } else {
         await Users.deleteOne({ email: existingUser.email });
       }
@@ -57,32 +57,42 @@ const Register = async (req, res) => {
     });
     await newUser.save();
 
-    successResponse(res, newUser, "user registered successfully")
+    successResponse(res, newUser, "User registered successfully")
   } catch (error) {
-    catchResponse(res, "error occured in register", error)
+    catchResponse(res, "Error occured in register", error)
   }
 };
 
-
 const Login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const data = await Users.findOne({ username });
-    if (data && data.is_verified) {
-      const match = await bcrypt.compare(password, data.password);
+    const loginValidate = joi.object({
+      username: joi.string().trim().required(),
+      password: joi.string().trim().required(),
+    });
+
+    const { error } = loginValidate.validate(req.body);
+    if (error) {
+      const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
+      errorResponse(res, errorMessage, 400);
+    }
+
+    const username = req.body.username.trim()
+    const password = req.body.password.trim()
+
+    const loginData = await Users.findOne({ username, is_verified: true }, "username email is_verified").lean();
+
+    if (loginData) {
+      const match = await bcrypt.compare(password, loginData.password);
       if (match) {
-        console.log(
-          `Username: ${data.username} is logged-in successfully with email: ${data.email}`
-        );
-        return res.json({ message: "Login successfully", token: data.token });
+        successResponse(res, loginData, "Login successfully")
       } else {
-        errorResponse(res, "Username or Password not match");
+        errorResponse(res, "Invalid username or password", 401);
       }
     } else {
-      errorResponse(res, "User not exist");
+      errorResponse(res, "Account not exists or not verified", 404);
     }
   } catch (error) {
-    catchResponse(res, "Server Error", error);
+    catchResponse(res, "Error occured in login", error);
   }
 };
 
