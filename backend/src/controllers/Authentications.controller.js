@@ -22,7 +22,7 @@ const Register = async (req, res) => {
 
     if (error) {
       const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
-      errorResponse(res, errorMessage, 400);
+      return errorResponse(res, errorMessage, 400);
     }
 
     const email = req.body.email.trim()
@@ -33,7 +33,7 @@ const Register = async (req, res) => {
 
     if (existingUser) {
       if (existingUser.is_verified) {
-        errorResponse(res, existingUser.username === username ? `${username} username already taken` : "Account already exists!", 401);
+        return errorResponse(res, existingUser.username === username ? `${username} username already taken` : "Account already exists!", 401);
       } else {
         await Users.deleteOne({ email: existingUser.email });
       }
@@ -57,9 +57,9 @@ const Register = async (req, res) => {
     });
     await newUser.save();
 
-    successResponse(res, newUser, "User registered successfully")
+    return successResponse(res, newUser, "User registered successfully")
   } catch (error) {
-    catchResponse(res, "Error occured in register", error)
+    return catchResponse(res, "Error occured in register", error)
   }
 };
 
@@ -73,72 +73,110 @@ const Login = async (req, res) => {
     const { error } = loginValidate.validate(req.body);
     if (error) {
       const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
-      errorResponse(res, errorMessage, 400);
+      return errorResponse(res, errorMessage, 400);
     }
 
     const username = req.body.username.trim()
     const password = req.body.password.trim()
 
-    const loginData = await Users.findOne({ username, is_verified: true }, "username email is_verified password").lean();
+    const loginData = await Users.findOne({ username, is_verified: true }, "username email is_verified password token").lean();
 
     if (loginData) {
       const match = await bcrypt.compare(password, loginData.password);
       if (match) {
         delete loginData.password
-        successResponse(res, loginData, "Login successfully")
+        return successResponse(res, loginData, "Login successfully")
       } else {
-        errorResponse(res, "Invalid username or password", 401);
+        return errorResponse(res, "Invalid username or password", 401);
       }
     } else {
-      errorResponse(res, "Account not exists or not verified", 404);
+      return errorResponse(res, "Account not exists or not verified", 404);
     }
   } catch (error) {
     console.log(error)
-    catchResponse(res, "Error occured in login", error);
+    return catchResponse(res, "Error occured in login", error);
   }
 };
 
 const UserDataProvider = async (req, res) => {
-  const { token } = req.body;
-  if (token) {
-    const user = await Users.findOne({ token: token });
-    if (user) {
-      return res.json({ email: user.email, username: user.username });
-    } else {
-      return res.json({ error: "Invalid token" });
+  try {
+    const userDataValidation = joi.object({
+      token: joi.string().trim().required()
+    })
+
+    const { error } = userDataValidation.validate(req.body)
+    if (error) {
+      const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
+      return errorResponse(res, errorMessage, 400);
     }
-  } else {
-    return res.json({ error: "Invalid token" });
+
+    const token = req.body.token.trim();
+
+    const user = await Users.findOne({ token: token, is_verified: true }, 'email username token').lean();
+    if (user) {
+      return successResponse(res, user, "User data found")
+    } else {
+      return errorResponse(res, "Invalid token", 498)
+    }
+  } catch (error) {
+    return catchResponse(res, "Error occured in user data", error)
   }
 };
 
 const userProfileInfo = async (req, res) => {
-  if (req.user) {
-    const user = req.user;
-    const id = user._id;
-    const orderData = await OrdermodelModel.find({ userId: id });
-    return res.status(200).json({
-      email: user.email,
-      username: user.username,
-      address: user.address,
-      phone_number: user.phone_number,
-      orderData: orderData,
-    });
-  } else {
-    return res.status(404).json({ error: "Invalid token" });
+  try {
+    if (req.user) {
+      const user = req.user;
+      const id = user._id;
+      const orderData = await OrdermodelModel.find({ userId: id });
+      const profileData = {
+        email: user.email,
+        username: user.username,
+        address: user.address,
+        phone_number: user.phone_number,
+        orderData: orderData,
+
+      }
+      return successResponse(res, profileData, "Profile retrieved successfully")
+    } else {
+      return errorResponse(res, "Invalid token", 498)
+    }
+  } catch (error) {
+    return catchResponse(res, "Error occured in profile", error)
   }
 };
 
 const userUpdateProfile = async (req, res) => {
-  const { username, address, phone_number } = req.body;
   try {
+    const updateProfileValidation = joi.object({
+      username: joi.string().trim().required(),
+      address: joi.string().trim().allow('').required(),
+      phone_number: joi.string().allow('').trim().required()
+    })
+    const { error } = updateProfileValidation.validate(req.body)
+    if (error) {
+      const errorMessage = _.get(error, "details[0].message", "An unknown error occurred");
+      return errorResponse(res, errorMessage, 400);
+    }
+
+    const username = req.body.username.trim()
+    const address = req.body.address.trim()
+    const phone_number = req.body.phone_number.trim()
+
     const user = await Users.findOneAndUpdate(
       { username },
       { address, phone_number }
-    );
-    return res.status(200).json({ message: "Profile updated successfully" });
+    ).lean();
+
+    const updateProfileData = {
+      email: user.email,
+      address: user.address,
+      username: user.username,
+      phone_number: user.phone_number
+    }
+    return successResponse(res, updateProfileData, "Profile updated successfully")
   } catch (error) {
-    return res.status(404).json({ error: "Invalid token" });
+    return catchResponse(res, "Error occurred in profile update", error)
   }
 };
 

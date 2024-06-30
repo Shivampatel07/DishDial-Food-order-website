@@ -9,7 +9,7 @@ import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import { useAuth } from "../authentication/Authcontext";
 
 function Profile() {
-  const {setIsLoading} = useAuth()
+  const { setIsLoading } = useAuth()
   const [userData, setUserData] = React.useState({});
   const [userOrders, setUserOrders] = React.useState([]);
   const [modalEditOpen, setModalEditOpen] = React.useState(false);
@@ -29,68 +29,81 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setEditData({
-        email: editData.email.trim(),
-        username: editData.username.trim(),
-        address: editData.address.trim(),
-        phone_number: editData.phone_number.trim(),
-      });
-      let phone_number_error = false;
-      if (
-        !(
-          /^[1-9][0-9]{9}$/.test(editData.phone_number) ||
-          editData.phone_number === ""
-        )
-      ) {
-        toast.error("Invalid phone number");
-        phone_number_error = true;
-      }
-      if (!phone_number_error) {
-        const response = await axios.post(
-          configureData.baseUrl + "/api/auth/update-profile",
-          editData,
-          {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        );
-        toast.success(response.data.message);
-        setModalEditOpen(false);
-      }
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+    setEditData({
+      email: editData.email.trim(),
+      username: editData.username.trim(),
+      address: editData.address.trim(),
+      phone_number: editData.phone_number.trim(),
+    });
+    let phone_number_error = false;
+    if (
+      !(
+        /^[1-9][0-9]{9}$/.test(editData.phone_number) ||
+        editData.phone_number === ""
+      )
+    ) {
+      toast.error("Invalid phone number");
+      phone_number_error = true;
+    }
+    if (!phone_number_error) {
+      const updateProfileData = editData
+      delete updateProfileData.email
+      await axios.post(
+        configureData.baseUrl + "/api/auth/update-profile",
+        updateProfileData,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      ).then((response) => {
+        const updatedProfileResponse = response.data
+        if (updatedProfileResponse.success === 1) {
+          toast.success(updatedProfileResponse.message);
+          setModalEditOpen(false);
+          window.location.reload()
+        } else {
+          toast.error(updatedProfileResponse.message);
+        }
+      }).catch((error) => {
+        toast.error("Internal server error")
+      })
     }
   };
 
   useEffect(() => {
     setIsLoading(true)
+    const token = localStorage.getItem("token")
     axios
       .get(configureData.baseUrl + "/api/auth/profile", {
         headers: {
-          Authorization: localStorage.getItem("token"),
+          Authorization: token,
         },
       })
-      .then((res) => {
-        setUserData(res.data);
-        setEditData({
-          username: res.data.username ? res.data.username : "",
-          email: res.data.email ? res.data.email : "",
-          address: res.data.address ? res.data.address : "",
-          phone_number: res.data.phone_number ? res.data.phone_number : "",
-        });
-        setUserOrders(res.data.orderData);
+      .then((response) => {
+        const profileData = response.data
+        if (profileData.success === 1) {
+          setUserData(profileData.data);
+          setEditData({
+            username: profileData.data.username ? profileData.data.username : "",
+            email: profileData.data.email ? profileData.data.email : "",
+            address: profileData.data.address ? profileData.data.address : "",
+            phone_number: profileData.data.phone_number ? profileData.data.phone_number : "",
+          });
+          setUserOrders(profileData.data.orderData);
+        }
+        else {
+          toast.error(profileData.message)
+        }
       })
       .catch((error) => {
         toast.error(error.response.data.error, {
           duration: 2000,
         });
       });
-      setIsLoading(false)
+    setIsLoading(false)
   }, []);
+
   const modalStyle = {
     position: "relative",
     top: "50%",
