@@ -36,15 +36,17 @@ function RestaurantPage() {
       setIsLoading(false)
   }, [id]);
   return (
-    <div>
-      <h1 className="text-4xl ms-10 pb-5 font-bold mt-5">
+    <div className="m-5 flex flex-col justify-center">
+      <h1 className="text-4xl ms-5 font-bold mt-5">
         {restaurantData.name}
       </h1>
+      <div className="p-5">
       <img
         src={configureData.restaurantImage + "/" + restaurantData.image}
         alt={restaurantData.name}
-        className="w-full h-96 object-cover mt-5"
+        className="w-full h-[300px] object-cover rounded-md"
       />
+      </div>
       <div className="mx-5 mt-5 text-xl font-semibold">
         Address : {restaurantData.address}
       </div>
@@ -58,15 +60,15 @@ function RestaurantPage() {
           {restaurantData.phone_number}
         </button>
       </div>
-      <div className="p-1 m-1 sm:p-5 sm:w-full sm:m-5 border-2 border-gray-100 rounded-xl bg-gray-200 ">
+      <div className="sm:p-5 sm:m-5 border-2 border-gray-100 rounded-xl bg-gray-200 ">
         {menuData.length > 0 ? (
           <div>
             <h2 className="text-3xl text-center m-3 font-bold mb-10">
               Menu Information
             </h2>
             <div className="flex justify-center">
-              <div className="w-[100%] sm:w-[80%]">
-                <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-14">
+              <div className="w-[100%] sm:w-[90%]">
+                <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
                   {menuData.map((product, index) => {
                     return (
                       <div key={index}>
