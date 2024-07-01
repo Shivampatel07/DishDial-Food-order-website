@@ -15,6 +15,7 @@ function RestaurantPage() {
   const { id } = useParams();
   const [restaurantData, setRestaurantData] = React.useState({});
   const [menuData, setMenuData] = React.useState([]);
+
   useEffect(() => {
     setIsLoading(true)
     axios
@@ -28,12 +29,12 @@ function RestaurantPage() {
         else {
           toast.error(restaurantData.message)
         }
-        setIsLoading(false)
       })
       .catch((error) => {
         toast.error(error)
       });
-  }, []);
+      setIsLoading(false)
+  }, [id]);
   return (
     <div>
       <h1 className="text-4xl ms-10 pb-5 font-bold mt-5">

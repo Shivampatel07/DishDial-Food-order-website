@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.d488650c.css",
-    "main.js": "/static/js/main.36d74071.js",
+    "main.css": "/static/css/main.4c700d3a.css",
+    "main.js": "/static/js/main.185b9b43.js",
     "static/media/dish-dial-high-resolution-logo-black-transparent.png": "/static/media/dish-dial-high-resolution-logo-black-transparent.a21109c01fc6c344e45c.png",
     "static/media/app-store-png-logo-33116.png": "/static/media/app-store-png-logo-33116.898627273092589eeb70.png",
     "index.html": "/index.html",
-    "main.d488650c.css.map": "/static/css/main.d488650c.css.map",
-    "main.36d74071.js.map": "/static/js/main.36d74071.js.map"
+    "main.4c700d3a.css.map": "/static/css/main.4c700d3a.css.map",
+    "main.185b9b43.js.map": "/static/js/main.185b9b43.js.map"
   },
   "entrypoints": [
-    "static/css/main.d488650c.css",
-    "static/js/main.36d74071.js"
+    "static/css/main.4c700d3a.css",
+    "static/js/main.185b9b43.js"
   ]
 }
