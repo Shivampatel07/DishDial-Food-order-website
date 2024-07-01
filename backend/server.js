@@ -33,7 +33,9 @@ app.use(expr.json());
 app.use("/api/auth", AuthRouter);
 app.use("/api", restaurentRouter);
 
-Sentry.setupExpressErrorHandler(app);
+if (process.env.ENVIRONMENT === 'production') {
+  Sentry.setupExpressErrorHandler(app);
+}
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
