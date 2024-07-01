@@ -41,7 +41,7 @@ function CardProduct(props) {
         alt={props.name}
         className="rounded-xl object-cover h-[200px] w-full"
       />
-      <h1 className="text-2xl">{props.name}</h1>
+      <h1 className="text-xl mt-3">{props.name}</h1>
       <p className="mt-1 cursor-pointer truncate" title={props.description}>
         Description : {props.description}
       </p>

@@ -12,7 +12,7 @@ function CardRestaurant(props) {
     >
       <Link to={props.url}>
         {props.offers && <div className="ribbon-2">{props.offers}</div>}
-        <img src={props.src} alt={props.alt} className="rounded-xl" />
+        <img src={props.src} alt={props.alt} className="rounded-xl h-[200px] w-[320px] cover" />
         <h1 className="text-2xl">{props.title}</h1>
         <div className="flex flex-row items-center space-x-5 mt-2">
           {" "}
