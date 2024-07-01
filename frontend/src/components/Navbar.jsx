@@ -12,6 +12,8 @@ import RegisterForm from "../authentication/RegisterForm";
 import LoginForm from "../authentication/LoginForm";
 import { useAuth } from "../authentication/Authcontext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
+import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 
 const Navbar = () => {
   let { isLoggedIn, user } = useAuth();
@@ -69,16 +71,12 @@ const Navbar = () => {
             onClick={() => setOpen(!open)}
             className="text-3xl absolute right-8 top-6 cursor-pointer md:hidden"
           >
-            <ion-icon name={open ? "close" : "menu"}></ion-icon>
+            {open ? <CloseTwoToneIcon fontSize="xl"/> : <MenuTwoToneIcon fontSize="xl" />}
           </div>
           <ul
-            className={`md:flex md:items-center md:pb-0 pb-12 font-[Raleway] absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
-              open ? "top-20 " : "top-[-490px]"
-            }`}
+            className={`md:flex md:items-center md:pb-0 pb-12 font-[Raleway] absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? "top-20 " : "top-[-490px]"
+              }`}
           >
-            {/* <li className="md:ml-8 text-xl md:my-0 my-7 hover:cursor-pointer hover:underline underline-offset-4 inline">
-              <Search />
-            </li> */}
             <li className="md:ml-8 text-xl md:my-0 my-7 hover:underline underline-offset-4">
               <Link
                 onClick={() => {
@@ -106,7 +104,7 @@ const Navbar = () => {
             {isLoggedIn ? (
               <li className="md:ml-8 text-xl md:my-0 my-5 ">
                 <Link to="/profile">
-                  <button className=" md:ms-5 px-5 py-3 bg-white  rounded-3xl hover:bg-orange-400">
+                  <button className="md:px-5 mb-3 md:mb-0 md:py-3 bg-white hover:underline hover:md:no-underline underline-offset-4  rounded-3xl hover:md:bg-orange-400">
                     Profile <AccountCircleIcon />
                   </button>
                 </Link>
@@ -153,14 +151,14 @@ const Navbar = () => {
             )}
 
             <li
-              className="md:ml-8 text-xl w-contain border border-white px-2 rounded-md py-2 hover:bg-[#f5f5f5] hover:border-black hover:cursor-pointer"
+              className="md:ml-8 text-xl w-contain md:border md:px-2 rounded-md md:py-2 hover:underline hover:md:no-underline underline-offset-4 hover:md:bg-[#f5f5f5] hover:border-black hover:cursor-pointer"
               onClick={() => {
                 setOpen(false);
                 setDrawerOpen(true);
               }}
             >
-              <ShoppingCartTwoToneIcon />{" "}
               <span className="inline md:hidden">Cart</span>
+              <ShoppingCartTwoToneIcon />
             </li>
             <Drawer isOpen={drawerOpen} setIsOpen={setDrawerOpen}></Drawer>
           </ul>
