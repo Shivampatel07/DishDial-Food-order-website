@@ -11,15 +11,19 @@ function RestaurantPage() {
     navigator.clipboard.writeText(restaurantData.phone_number);
     toast.success("Phone number copied to clipboard");
   };
-  const {setIsLoading} = useAuth()
+  const { setIsLoading } = useAuth()
   const { id } = useParams();
-  const [restaurantData, setRestaurantData] = React.useState({});
+  const [restaurantData, setRestaurantData] = React.useState({
+    name: '',
+    image: '',
+    address: '',
+    phone_number: ''
+  });
   const [menuData, setMenuData] = React.useState([]);
 
   useEffect(() => {
     setIsLoading(true)
-    axios
-      .get(configureData.baseUrl + "/api/restaurent/" + id)
+    axios.get(configureData.baseUrl + "/api/restaurent/" + id)
       .then((response) => {
         const restaurantData = response.data
         if (restaurantData.success === 1) {
@@ -29,11 +33,11 @@ function RestaurantPage() {
         else {
           toast.error(restaurantData.message)
         }
-      })
-      .catch((error) => {
+      }).catch((error) => {
         toast.error(error)
-      });
-      setIsLoading(false)
+      }).finally(() => {
+        setIsLoading(false)
+      })
   }, [id]);
   return (
     <div className="m-5 flex flex-col justify-center">
