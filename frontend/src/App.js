@@ -14,22 +14,23 @@ import Loading from "./components/Loading";
 function AppContent() {
   let { isLoggedIn, isLoading } = useAuth();
   return (
-    <>
+    <div className="relative">
       <Navbar />
+      {isLoading && <Loading />}
       <Routes>
-        <Route exact path="/" element={!isLoading ? <Home /> : <Loading/>} />
-        <Route path="/offers" element={!isLoading ? <Offers /> : <Loading/>} />
-        <Route path="/help" element={!isLoading ? <Help /> : <Loading/>} />
-        <Route path="/restaurant/:id" element={!isLoading ? <RestaurantPage /> : <Loading/>} />
+        <Route exact path="/" element={<Home />} />
+        <Route path="/offers" element={<Offers />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/restaurant/:id" element={<RestaurantPage />} />
         {isLoggedIn ? (
-          <Route path="/profile" element={!isLoading ? <Profile /> : <Loading/>} />
+          <Route path="/profile" element={<Profile />} />
         ) : (
           <Route path="/*" element={<ErrorPage />} />
         )}
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

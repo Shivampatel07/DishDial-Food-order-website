@@ -9,6 +9,7 @@ function RegisterForm(props) {
   let { setIsInfoGet, isInfoGet } = useAuth();
   const [RegisterData, setRegisterData] = useState({});
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setRegisterData({ ...RegisterData, [e.target.name]: e.target.value });
@@ -21,7 +22,7 @@ function RegisterForm(props) {
       return;
     } else {
       setError("");
-
+      setLoading(true)
       const response = await axios.post(baseUrl + "/api/auth/register", {
         email: RegisterData.email,
         username: RegisterData.username,
@@ -38,6 +39,8 @@ function RegisterForm(props) {
         }
       }).catch((error) => {
         toast.error('Internal server error')
+      }).finally(() => {
+        setLoading(false)
       })
     }
   };
@@ -109,10 +112,11 @@ function RegisterForm(props) {
 
       <div class="flex items-center justify-between mt-6">
         <button
-          class="bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded "
+          class="bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"
           type="submit"
+          disabled={loading}
         >
-          Sign-Up
+          {loading ? 'Loading...' : 'Sign-Up'}
         </button>
       </div>
       <div

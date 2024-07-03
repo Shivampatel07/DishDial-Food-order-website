@@ -7,6 +7,7 @@ const baseUrl = configureData.baseUrl;
 
 function LoginForm(props) {
   let { setIsInfoGet, isInfoGet } = useAuth();
+  const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState({});
 
   const handleChange = (e) => {
@@ -18,6 +19,7 @@ function LoginForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const response = await axios.post(baseUrl + "/api/auth/login", userData, {
       withcredentials: true,
       headers: {
@@ -35,6 +37,8 @@ function LoginForm(props) {
       }
     }).catch((error) => {
       toast.error("Internal server error")
+    }).finally(() => {
+      setLoading(false)
     })
   };
   return (
@@ -73,10 +77,11 @@ function LoginForm(props) {
       </div>
       <div class="flex items-center justify-between">
         <button
-          class="bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded "
+          class={"bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"}
           type="submit"
+          disabled={loading}
         >
-          Sign-In
+          {loading ? 'Loading...' : 'Sign-In'}
         </button>
         <a
           class="inline-block align-baseline hover:font-semibold text-sm text-orange-500 hover:text-orange-800"

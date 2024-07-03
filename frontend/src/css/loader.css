@@ -1,57 +1,26 @@
 /* HTML: <div class="loader"></div> */
 .loader {
-	width: 150px;
-	height: 150px;
-	border-radius: 50%;
-	border: 8px solid #d1914b;
-	box-sizing: border-box;
-	margin-left: 30%;
-	--c:no-repeat radial-gradient(farthest-side, #d64123 94%,#0000);
-	--b:no-repeat radial-gradient(farthest-side, #000 94%,#0000);
-	background:
-	  var(--c) 11px 15px,
-	  var(--b) 6px 15px,    
-	  var(--c) 35px 23px,
-	  var(--b) 29px 15px,    
-	  var(--c) 11px 46px,
-	  var(--b) 11px 34px,    
-	  var(--c) 36px 0px,
-	  var(--b) 50px 31px,
-	  var(--c) 47px 43px,
-	  var(--b) 31px 48px,    
-	  #f6d353; 
-	background-size: 15px 15px,6px 6px;
-	animation: l4 3s infinite;
-  }
-  @keyframes l4 {
-	0%     {-webkit-mask:conic-gradient(#0000 0     ,#000 0)}
-	16.67% {-webkit-mask:conic-gradient(#0000 60deg ,#000 0)}
-	33.33% {-webkit-mask:conic-gradient(#0000 120deg,#000 0)}
-	50%    {-webkit-mask:conic-gradient(#0000 180deg,#000 0)}
-	66.67% {-webkit-mask:conic-gradient(#0000 240deg,#000 0)}
-	83.33% {-webkit-mask:conic-gradient(#0000 300deg,#000 0)}
-	100%   {-webkit-mask:conic-gradient(#0000 360deg,#000 0)}
-  }
-
-  /* HTML: <div class="loader"></div> */
-.loaders {
-	width: fit-content;
-	font-weight: bold;
-	font-family: monospace;
-	font-size: 30px;
-	background:linear-gradient(90deg,#000 50%,#0000 0) right/200% 100%;
-	animation: l21 3s infinite linear;
-  }
-  .loaders::before {
-	content :"We know you are hungry";
-	color: #0000;
-	padding: 0 5px;
-	background: inherit;
-	background-image: linear-gradient(90deg,#fff 50%,#000 0);
-	-webkit-background-clip:text;
-			background-clip:text;
-  }
-  
-  @keyframes l21{
-	100%{background-position: left}
-  }
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #fff7f700;
+  border-right-color: #ffa600;
+  position: relative;
+  animation: l24 1s infinite linear;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: 2s;
+}
+.loader:after {
+  animation-duration: 4s;
+}
+@keyframes l24 {
+  100% {transform: rotate(1turn)}
+}

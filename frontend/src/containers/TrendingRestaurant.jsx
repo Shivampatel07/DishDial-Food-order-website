@@ -3,10 +3,14 @@ import CardRestaurant from "../components/CardRestaurant";
 import axios from "axios";
 import configureData from "../environments/environments";
 import toast from "react-hot-toast";
+import { useAuth } from "../authentication/Authcontext";
 
 function TrendingRestaurant() {
   const [restaurantData, setRestaurantData] = React.useState([]);
+  const { setIsLoading } = useAuth()
+
   useEffect(() => {
+    setIsLoading(true)
     axios
       .get(configureData.baseUrl + "/api/restaurent/all")
       .then((response) => {
@@ -15,7 +19,9 @@ function TrendingRestaurant() {
       })
       .catch((error) => {
         toast.error("Internal server error")
-      });
+      }).finally(() => {
+        setIsLoading(false)
+      })
   }, []);
   return (
     <div>
