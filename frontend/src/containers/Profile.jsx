@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import configureData from "../environments/environments";
 import toast from "react-hot-toast";
@@ -10,6 +11,7 @@ import { useAuth } from "../authentication/Authcontext";
 
 function Profile() {
   const { setIsLoading } = useAuth()
+  const navigate = useNavigate()
   const [userData, setUserData] = React.useState({});
   const [userOrders, setUserOrders] = React.useState([]);
   const [modalEditOpen, setModalEditOpen] = React.useState(false);
@@ -118,6 +120,7 @@ function Profile() {
 
   const Logout = () => {
     localStorage.removeItem("token");
+    navigate('/')
     window.location.reload();
   };
   return (

@@ -47,14 +47,15 @@ export default function Drawer({ children, isOpen, setIsOpen }) {
         },
       })
       .then((res) => {
+        const profileRes = res.data
         if (
-          res.data.address === "" ||
-          res.data.address === undefined ||
-          res.data.address === null
+          profileRes.data.address === "" ||
+          profileRes.data.address === undefined ||
+          profileRes.data.address === null
         ) {
           toast.error("Please add address in profile");
         } else {
-          setUserData(res.data);
+          setUserData(profileRes.data);
         }
       })
       .catch((err) => {
