@@ -54,7 +54,7 @@ const Navbar = () => {
 
 	return (
 		<>
-			<div className="shadow-lg  w-full fixed top-0 left-0 z-20">
+			<div className="shadow-lg  w-full fixed top-0 left-0 z-20 font-[Raleway]">
 				<div className="flex items-center justify-between bg-white py-2 md:px-8 px-5">
 					<div className="text-2xl absolute right-8 cursor-pointer md:hidden" onClick={() => setOpen(!open)}>
 						{open ? <CloseTwoToneIcon fontSize="xl" /> : <MenuTwoToneIcon fontSize="xl" />}
@@ -64,7 +64,7 @@ const Navbar = () => {
 							<img src={logo} alt="DishDial" width="90px" />
 						</Link>
 					</div>
-					<ul className={`md:flex md:items-center md:py-0 py-5 font-[Raleway] absolute md:static bg-white md:z-auto z-[-1] top-14 md:w-auto md:pl-0 pl-9 transition-all duration-200 ease-in-out ${open ? "w-[50%] px-5 right-0" : "px-5 right-[-200px]"}`}>
+					<ul className={`md:flex md:items-center md:py-0 py-5 absolute md:static bg-white md:z-auto z-[-1] top-14 md:w-auto md:pl-0 pl-9 transition-all duration-200 ease-in-out ${open ? "w-[50%] px-5 right-0" : "px-5 right-[-200px]"}`}>
 						<li className="md:ml-8 text-md md:text-lg md:my-0 my-3 hover:underline underline-offset-4">
 							<Link to="/" className={url === "/" ? " underline underline-offset-4" : ""} onClick={() => setOpen(false)}>
 								Home <LocalOfferTwoToneIcon />
@@ -98,7 +98,7 @@ const Navbar = () => {
 									aria-labelledby="modal-modal-title"
 									aria-describedby="modal-modal-description">
 									<Box sx={modalStyle}>
-										<h1 className="text-2xl uppercase md:text-3xl font-bold font-[Raleway] text-center mb-5 md:mb-10">
+										<h1 className="text-2xl uppercase md:text-3xl font-bold text-center mb-5 md:mb-10">
 											Sign-in Form
 										</h1>
 										<LoginForm handleSignupOpen={handleSignupOpen} />
@@ -110,7 +110,7 @@ const Navbar = () => {
 									aria-labelledby="modal-modal-title"
 									aria-describedby="modal-modal-description">
 									<Box sx={modalStyle}>
-										<h1 className="text-3xl font-bold font-[Raleway] text-center mb-10">
+										<h1 className="text-2xl uppercase md:text-3xl font-bold text-center mb-5 md:mb-10">
 											Sign-Up Form
 										</h1>
 										<RegisterForm handleSigninOpen={handleSigninOpen} />
