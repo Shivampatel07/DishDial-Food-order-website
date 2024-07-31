@@ -8,13 +8,13 @@ function CardRestaurant(props) {
   return (
     <div
       style={{ width: "350px" }}
-      className="shadow-lg  rounded-lg p-3 relative"
+      className="shadow-lg rounded-lg p-4 relative border border-gray-200"
     >
       <Link to={props.url}>
         {props.offers && <div className="ribbon-2">{props.offers}</div>}
-        <img src={props.src} alt={props.alt} className="rounded-xl h-[200px] w-[320px] cover" />
-        <h1 className="text-2xl">{props.title}</h1>
-        <div className="flex flex-row items-center space-x-5 mt-2">
+        <img src={props.src} alt={props.alt} className="rounded-md h-[200px] w-[320px] cover" />
+        <h1 className="text-xl mt-2">{props.title}</h1>
+        <div className="flex flex-row items-center space-x-5">
           {" "}
           <Rating
             name="read-only"

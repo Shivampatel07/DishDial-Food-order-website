@@ -85,7 +85,7 @@ const Navbar = () => {
 							</li>
 						) : (
 							<li className="md:ml-8 text-md md:text-lg md:my-0 my-5 ">
-								<button className=" md:ms-5 px-5 py-3 bg-orange-400 rounded-3xl hover:bg-orange-600"
+								<button className="md:ms-5 px-5 py-2 bg-orange-400 rounded-3xl hover:bg-orange-600"
 									onClick={() => {
 										setOpen(false);
 										handleSigninOpen();
@@ -131,7 +131,6 @@ const Navbar = () => {
 					</ul>
 				</div>
 			</div>
-			<br />
 			<br />
 			<br />
 			<br />

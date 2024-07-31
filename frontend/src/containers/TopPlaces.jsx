@@ -23,8 +23,8 @@ function TopPlaces(props) {
     </div>
   ));
   return (
-    <div className="mt-10 bg-[#FCFCFC] shadow-md p-2">
-      <h1 className="text-3xl mx-5 font-bold">Top places for you</h1>
+    <div className="-[#FCFCFC] shadow-md md:p-2 pb-2">
+      <h1 className="text-2xl md:text-3xl mx-5 font-bold">Top places for you</h1>
       <p className="mx-5 text-[#676767]">Get a best restaurant in your city</p>
       <AliceCarousel
         mouseTracking
