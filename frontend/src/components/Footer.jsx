@@ -57,7 +57,7 @@ function Footer() {
             <ul className="mt-1 md:mt-3 text-xs md:text-md underline">
               <li>TERMS & CONDITIONS</li>
               <li>SECURITY</li>
-              <li>PRIVACY</li>
+              <li>PRIVACY-POLICY</li>
             </ul>
           </div>
           <div className="col-span-2 md:col-span-1 text-center md:text-left">

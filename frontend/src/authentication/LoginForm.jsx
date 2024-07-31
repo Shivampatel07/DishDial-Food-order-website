@@ -50,12 +50,12 @@ function LoginForm(props) {
   };
   return (
     <form className="font-[Raleway]" onSubmit={handleSubmit}>
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
           Username
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="username"
           type="text"
           name="username"
@@ -63,12 +63,12 @@ function LoginForm(props) {
           placeholder="Username"
         />
       </div>
-      <div class="mb-4 relative">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+      <div className="mb-4 relative">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
           Password
         </label>
         <input
-          class="shadow appearance-none border  rounded w-full py-1 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border  rounded w-full py-1 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
           name="password"
           onChange={handleChange}
@@ -77,21 +77,21 @@ function LoginForm(props) {
         />
         {passwordShow ? <VisibilityIcon fontSize="small" className="absolute right-4 top-8" onClick={togglePasswordShow} /> : <VisibilityOffIcon fontSize="small" className="absolute right-4 top-8" onClick={togglePasswordShow} />}
       </div>
-      <div class="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4">
         <button
-          class={"bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"}
+          className={"bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"}
           type="submit"
           disabled={loading}>
           {loading ? 'Loading...' : 'Sign-In'}
         </button>
         <a
-          class="inline-block align-baseline hover:font-semibold text-sm text-orange-500 hover:text-orange-800"
+          className="inline-block align-baseline hover:font-semibold text-sm text-orange-500 hover:text-orange-800"
           href="/">
           Forgot Password?
         </a>
       </div>
       <div
-        class="hover:text-orange-500 cursor-pointer underline"
+        className="hover:text-orange-500 cursor-pointer underline"
         onClick={props.handleSignupOpen}>
         Create an account
       </div>
