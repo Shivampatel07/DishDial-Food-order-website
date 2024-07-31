@@ -30,11 +30,12 @@ const Navbar = () => {
 		top: "50%",
 		left: "50%",
 		transform: "translate(-50%, -50%)",
-		width: 400,
+		width: '90%',
 		bgcolor: "white",
 		boxShadow: 24,
 		p: 4,
 		borderRadius: "10px",
+		maxWidth: 400
 	};
 	const [modalSignInOpen, setModalSignInOpen] = useState(false);
 	const handleSigninOpen = () => {
@@ -97,7 +98,7 @@ const Navbar = () => {
 									aria-labelledby="modal-modal-title"
 									aria-describedby="modal-modal-description">
 									<Box sx={modalStyle}>
-										<h1 className="text-3xl font-bold font-[Raleway] text-center mb-10">
+										<h1 className="text-2xl uppercase md:text-3xl font-bold font-[Raleway] text-center mb-5 md:mb-10">
 											Sign-in Form
 										</h1>
 										<LoginForm handleSignupOpen={handleSignupOpen} />

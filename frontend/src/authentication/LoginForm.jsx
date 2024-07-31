@@ -3,12 +3,19 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useAuth } from "./Authcontext";
 import configureData from "../environments/environments";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const baseUrl = configureData.baseUrl;
 
 function LoginForm(props) {
   let { setIsInfoGet, isInfoGet } = useAuth();
   const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState({});
+  const [passwordShow, setPasswordShow] = useState(false)
+
+  const togglePasswordShow = () => {
+    setPasswordShow(!passwordShow)
+  }
 
   const handleChange = (e) => {
     setUserData({
@@ -20,7 +27,7 @@ function LoginForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
-    const response = await axios.post(baseUrl + "/api/auth/login", userData, {
+    await axios.post(baseUrl + "/api/auth/login", userData, {
       withcredentials: true,
       headers: {
         "Content-Type": "application/json",
@@ -44,14 +51,11 @@ function LoginForm(props) {
   return (
     <form className="font-[Raleway]" onSubmit={handleSubmit}>
       <div class="mb-4">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="username"
-        >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
           Username
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="username"
           type="text"
           name="username"
@@ -59,41 +63,36 @@ function LoginForm(props) {
           placeholder="Username"
         />
       </div>
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="password"
-        >
+      <div class="mb-4 relative">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
           Password
         </label>
         <input
-          class="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border  rounded w-full py-1 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
           name="password"
           onChange={handleChange}
-          type="password"
-          placeholder="******************"
+          type={passwordShow ? "text" : "password"}
+          placeholder="Password"
         />
+        {passwordShow ? <VisibilityIcon fontSize="small" className="absolute right-4 top-8" onClick={togglePasswordShow} /> : <VisibilityOffIcon fontSize="small" className="absolute right-4 top-8" onClick={togglePasswordShow} />}
       </div>
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between mb-4">
         <button
           class={"bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"}
           type="submit"
-          disabled={loading}
-        >
+          disabled={loading}>
           {loading ? 'Loading...' : 'Sign-In'}
         </button>
         <a
           class="inline-block align-baseline hover:font-semibold text-sm text-orange-500 hover:text-orange-800"
-          href="/"
-        >
+          href="/">
           Forgot Password?
         </a>
       </div>
       <div
-        class="my-2 hover:text-orange-500 cursor-pointer"
-        onClick={props.handleSignupOpen}
-      >
+        class="hover:text-orange-500 cursor-pointer underline"
+        onClick={props.handleSignupOpen}>
         Create an account
       </div>
     </form>
