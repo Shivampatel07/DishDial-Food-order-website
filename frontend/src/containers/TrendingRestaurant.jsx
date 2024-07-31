@@ -25,11 +25,11 @@ function TrendingRestaurant() {
   }, []);
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mt-10">
+      <h1 className="text-xl md:text-3xl font-bold text-center mt-5">
         Trending restaurant at Ahmedabad
       </h1>
-      <div className="flex justify-center items-center mt-10">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-14  ">
+      <div className="flex justify-center items-center mt-5">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-14">
           {restaurantData.map((restaurant, index) => {
             return (
               <div key={index}>

@@ -3,6 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import configureData from "../environments/environments";
 import { useAuth } from "./Authcontext";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const baseUrl = configureData.baseUrl;
 
 function RegisterForm(props) {
@@ -10,6 +12,16 @@ function RegisterForm(props) {
   const [RegisterData, setRegisterData] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [createPasswordShow, setCreatePasswordShow] = useState(false)
+  const [confirmPasswordShow, setConfirmPasswordShow] = useState(false)
+
+  const toggleCreatePasswordShow = () => {
+    setCreatePasswordShow(!createPasswordShow)
+  }
+
+  const toggleConfirmPasswordShow = () => {
+    setConfirmPasswordShow(!confirmPasswordShow)
+  }
 
   const handleChange = (e) => {
     setRegisterData({ ...RegisterData, [e.target.name]: e.target.value });
@@ -23,7 +35,7 @@ function RegisterForm(props) {
     } else {
       setError("");
       setLoading(true)
-      const response = await axios.post(baseUrl + "/api/auth/register", {
+      await axios.post(baseUrl + "/api/auth/register", {
         email: RegisterData.email,
         username: RegisterData.username,
         password: RegisterData.createpassword,
@@ -46,16 +58,13 @@ function RegisterForm(props) {
   };
 
   return (
-    <form className="font-[Raleway]" onSubmit={handleSubmit}>
-      <div class="mb-4">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="username"
-        >
+    <form onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
           Username
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="username"
           type="text"
           name="username"
@@ -63,66 +72,60 @@ function RegisterForm(props) {
           placeholder="Username"
         />
       </div>
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-          Username
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          Email Address
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="email"
           type="email"
           name="email"
           onChange={handleChange}
-          placeholder="Email"
+          placeholder="Email Address"
         />
       </div>
-      <div class="mb-2">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="createpassword"
-        >
+      <div className="mb-2 relative">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="createpassword">
           Create password
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           id="createpassword"
-          type="password"
+          type={createPasswordShow ? "text" : "password"}
           name="createpassword"
           onChange={handleChange}
           placeholder="******************"
         />
+        {createPasswordShow ? <VisibilityIcon fontSize="small" className="absolute right-4 top-8" onClick={toggleCreatePasswordShow} /> : <VisibilityOffIcon fontSize="small" className="absolute right-4 top-8" onClick={toggleCreatePasswordShow} />}
       </div>
-      <div>
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="confirmpassword"
-        >
+      <div className="mb-4 relative">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmpassword">
           Confirm password
         </label>
         <input
-          class="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border  rounded w-full py-1 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           id="confirmpassword"
-          type="password"
+          type={confirmPasswordShow ? "text" : "password"}
           name="confirmpassword"
           onChange={handleChange}
           placeholder="******************"
         />
+        {confirmPasswordShow ? <VisibilityIcon fontSize="small" className="absolute right-4 top-8" onClick={toggleConfirmPasswordShow} /> : <VisibilityOffIcon fontSize="small" className="absolute right-4 top-8" onClick={toggleConfirmPasswordShow} />}
       </div>
       {error && <div className="text-red-500 text-xs p-1">{error}</div>}
 
-      <div class="flex items-center justify-between mt-6">
+      <div className="flex items-center justify-between">
         <button
-          class="bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"
+          className="bg-orange-400 hover:bg-orange-600 text-white  py-2 px-4 rounded disabled:bg-orange-400"
           type="submit"
-          disabled={loading}
-        >
+          disabled={loading}>
           {loading ? 'Loading...' : 'Sign-Up'}
         </button>
       </div>
       <div
-        class="my-2 hover:text-orange-500 cursor-pointer"
-        onClick={props.handleSigninOpen}
-      >
+        className="my-2 hover:text-orange-500 cursor-pointer underline"
+        onClick={props.handleSigninOpen}>
         Already have an account?
       </div>
     </form>

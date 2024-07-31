@@ -41,10 +41,10 @@ function Footer() {
         </div>
       </div>
       <div className="flex items-center justify-center p-3 md:col-span-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-[Raleway]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-10 font-[Raleway]">
           <div>
-            <h2 className="text-lg font-semibold">ABOUT DISHDIAL</h2>
-            <ul className="mt-3">
+            <h2 className="text-md md:text-lg font-semibold">ABOUT DISHDIAL</h2>
+            <ul className="mt-1 md:mt-3 text-xs md:text-md underline">
               <li>BLOG</li>
               {/* <li>WORK WITH US</li> */}
               {/* <li>REPORT</li> */}
@@ -53,17 +53,17 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h2 className="text-lg font-semibold">Developed by</h2>
-            <ul className="mt-3">
-              <li>Patel Shivam Hareshkumar</li>
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold">ABOUT DISHDIAL</h2>
-            <ul className="mt-3">
+            <h2 className="text-md md:text-lg font-semibold">MORE ABOUT DISHDIAL</h2>
+            <ul className="mt-1 md:mt-3 text-xs md:text-md underline">
               <li>TERMS & CONDITIONS</li>
               <li>SECURITY</li>
-              <li>PRIVACY</li>
+              <li>PRIVACY-POLICY</li>
+            </ul>
+          </div>
+          <div className="col-span-2 md:col-span-1 text-center md:text-left">
+            <h2 className="text-md md:text-lg font-semibold">Developed by</h2>
+            <ul className="mt-1 md:mt-3 text-sm md:text-md">
+              <li>Patel Shivam Hareshkumar</li>
             </ul>
           </div>
         </div>
