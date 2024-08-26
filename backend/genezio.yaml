@@ -1,0 +1,9 @@
+frontend:
+    path: ./
+    publish: dist
+    scripts:
+        build: npm run build:prod
+        deploy: npm install
+name: DishDial-Food-order-website-backend
+region: eu-central-1
+yamlVersion: 2
